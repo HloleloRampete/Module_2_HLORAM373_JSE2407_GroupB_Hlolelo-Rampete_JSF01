@@ -4,7 +4,8 @@ import homePage from './pages/homePage.js';
 import productDetailViewPage from './pages/productDetailViewPage.js';
 import loginPage from './pages/loginPage.js';
 import navbar from './components/header.js';
-import sort from './sort';
+import sortComponent from './components/sort.js';
+import filterComponent from './components/filter.js';
 
 
 window.Alpine = Alpine;
@@ -25,6 +26,8 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('productDetailViewPage', productDetailViewPage);
   Alpine.data('loginPage', loginPage);
   Alpine.data('navbar', navbar);
+  Alpine.data('sortComponent', sortComponent);
+  Alpine.data('filterComponent', filterComponent);
 });
 
 Alpine.start();
