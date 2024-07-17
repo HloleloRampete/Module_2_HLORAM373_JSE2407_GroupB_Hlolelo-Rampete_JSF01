@@ -3,7 +3,8 @@ import Alpine from 'alpinejs';
 import homePage from './pages/homePage.js';
 import productDetailViewPage from './pages/productDetailViewPage.js';
 import loginPage from './pages/loginPage.js';
-import navbar from './components/navbar.js';
+import navbar from './components/header.js';
+import sort from './sort';
 
 
 window.Alpine = Alpine;
