@@ -1,6 +1,6 @@
 // src/filter.js
 
-import { getCategories } from "../api/api"; // Make sure to adjust the import path
+import { getCategories } from "../api/api"; 
 
 function filterComponent() {
   return {
