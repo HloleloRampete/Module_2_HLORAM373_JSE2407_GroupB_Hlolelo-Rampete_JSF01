@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Store</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div id="root">
+    <!-- Add your components here -->
+    <div x-show="$store.app.currentPage === 'home'" x-data="homePage()"></div>
+    <div x-show="$store.app.currentPage === 'product'" x-data="productDetailViewPage()"></div>
+    <div x-show="$store.app.currentPage === 'login'" x-data="loginPage()"></div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
