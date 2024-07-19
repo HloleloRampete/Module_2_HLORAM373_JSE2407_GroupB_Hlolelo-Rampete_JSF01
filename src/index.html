@@ -44,17 +44,9 @@
         </nav>
       </header>
       <!-- SORT COMPONENT -->
-      <div
-        x-data="sortComponent()"
-        class="flex sm:w-[95%] max-w-[21rem] md:w-full"
-      >
+      <div x-data="sortComponent()" class="flex sm:w-[95%] max-w-[21rem] md:w-full">
         <label for="sort" class="w-20 my-auto font-semibold">Sort by:</label>
-        <select
-          x-model="sorting"
-          @change="handleSort"
-          id="sort"
-          class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-        >
+        <select x-model="sorting" @change="handleSort" id="sort" class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
           <option value="default">Default</option>
           <option value="low">Price: Low to High</option>
           <option value="high">Price: High to Low</option>
@@ -63,7 +55,6 @@
       <!-- FILTER COMPONENT -->
       <div x-data="filterComponent()" x-init="initializeCategories">
         <form>
-          <!-- Filter dropdown button -->
           <div class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
             <button @click.prevent="toggleDropdown" id="dropdown-button" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200" type="button">
               <span x-text="filterItem"></span>
@@ -73,19 +64,16 @@
             </button>
             <div id="dropdown" class="z-10 absolute top-[100%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
               <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdown-button">
-                <li @click="handleFilter('All categories')" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  All categories
-                </li>
+                <li @click="handleFilter('All categories')" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 cursor-pointer">All categories</li>
                 <template x-for="category in categories" :key="category">
-                  <li>
-                    <button @click="handleFilter(category)" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100" x-text="category"></button>
-                  </li>
+                  <li><button @click="handleFilter(category)" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100" x-text="category"></button></li>
                 </template>
               </ul>
             </div>
           </div>
         </form>
       </div>
+      
       
 
          <!-- Main Content -->
