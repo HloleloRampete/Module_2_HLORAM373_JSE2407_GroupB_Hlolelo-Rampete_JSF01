@@ -302,19 +302,20 @@
   </div>
 </div>
     <script>
-    function sortComponent({products}) {
-      return {
-        sorting: 'default',
-        sortedProducts: products,
-        handleSort() {
-          console.log('Sorting by:', this.sorting);
-          console.log('Original products:', products);
-          switch (this.sorting) {
-            case 'low':
-              this.sortedProducts = [...products].sort((a, b) => {
-                console.log(`Comparing ${a.price} and ${b.price}`);
-                return a.price - b.price;
-              });
+    function store() {
+        return {
+          searchQuery: "",
+          sortOrder: "",
+          selectedCategory: "",
+          loading: false,
+          products: [],
+          filteredProductsList: [],
+          favorites: [],
+          showModal: false,
+          selectedProduct: null,
+          categories: [],
+
+          
               break;
             case 'high':
               this.sortedProducts = [...products].sort((a, b) => {
