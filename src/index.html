@@ -179,7 +179,8 @@
             x-text="product.title"
           ></h3>
           <p class="text-gray-700 font-bold" x-text="'$' + product.price"></p>
-          <p class="text-gray-500" x-text="product.category"></p>
+          <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10" x-text="product.category">
+          </span>
           <div class="text-gray-700 mt-2 flex items-center">
             <template x-for="i in 5">
               <svg
