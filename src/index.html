@@ -111,16 +111,14 @@
     <!-- Main Content -->
     <div class="container mx-auto p-6">
       <!-- SORT AND FILTER COMPONENTS -->
-      <div class="flex items-center space-x-4 p-4 w-full max-w-screen-lg">
-        <!-- SORT COMPONENT -->
-        <div x-data="sortComponent(products)" class="flex sm:w-[50%] max-w-[21rem] md:w-full">
-          <label for="sort" class="w-20 my-auto font-semibold">Sort by:</label>
-          <select x-model="sorting" @change="handleSort" id="sort" class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-            <option value="default">Default</option>
-            <option value="low">Price: Low to High</option>
-            <option value="high">Price: High to Low</option>
-          </select>
-        </div>
+      <div class="flex justify-between mb-4">
+        <select x-model="selectedCategory" class="border p-2 rounded">
+          <option value="">All Categories</option>
+          <template x-for="category in categories" :key="category">
+            <option :value="category" x-text="category"></option>
+          </template>
+        </select>
+    
 
         <!-- FILTER COMPONENT -->
         <div x-data="filterComponent()" x-init="initializeCategories" class="flex sm:w-[50%] max-w-[31.25rem] md:w-full">
