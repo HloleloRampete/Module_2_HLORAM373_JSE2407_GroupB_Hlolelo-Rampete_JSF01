@@ -238,48 +238,69 @@
       </template>
     </div>
   </div>
-        <div x-show="!loading && error" class="grid justify-center">
-          <!-- Error Handling -->
-          <div class="bg-red-200 p-4 rounded-md">
-            <p>Error: <span x-text="error"></span></p>
-          </div>
-        </div>
-
-        <div x-show="!loading && !error" class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 justify-center">
-          <!-- Product Cards -->
-          <template x-for="product in products" :key="product.id">
-            <div class="flex flex-col cursor-pointer max-w-80 hover:-translate-y-1 hover:scale-105 duration-300 bg-white border border-slate-200 shadow shadow-slate-950/5 rounded-2xl overflow-hidden">
-              <img class="object-cover w-full h-48" x-bind:src="product.image" alt="Product Image">
-              <div class="flex-1 flex flex-col p-6">
-                <header class="mb-2 flex-2">
-                  <h2 class="text-lg line-clamp-2 font-extrabold leading-snug" x-text="product.title"></h2>
-                </header>
-                <div class="text-base line-clamp-2 font-extrabold text-slate-500 leading-snug">
-                  <h2 x-text="'$' + product.price"></h2>
-                </div>
-                <div class="flex mt-1 space-x-2">
-                  <div class="justify-start flex-1">
-                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10" x-text="product.category"></span>
-                  </div>
-                  <div class="justify-end space-x-2">
-                    <button @click="addToFavorites($event, product.id)" class="focus:outline-none">
-                      <svg class="me-1.5 h-5 w-5 hover:fill-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" transform="scale(1.6)">
-                        <!-- Favorite Icon SVG -->
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                      </svg>
-                    </button>
-                    <button class="inline-flex justify-center whitespace-nowrap rounded-lg bg-cyan-700 px-3 py-2 text-sm font-medium text-white hover:bg-cyan-900 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors">
-                      Add To Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </div>
-      </div>
+  <!-- Modal -->
+  <div
+  x-show="showModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div
+    class="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-md mx-4"
+  >
+    <button
+      @click="closeModal()"
+      class="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+    <h2 class="text-xl font-bold mb-4" x-text="selectedProduct?.title"></h2>
+    <img
+      :src="selectedProduct?.image"
+      alt=""
+      class="h-48 object-cover mb-4 mx-auto"
+    />
+    <p
+      class="text-gray-700 font-bold mb-2"
+      x-text="'$' + selectedProduct?.price"
+    ></p>
+    <p class="text-gray-500 mb-2" x-text="selectedProduct?.category"></p>
+    <p class="text-gray-700 mb-4" x-text="selectedProduct?.description"></p>
+    <div class="text-gray-700 mt-2 flex items-center justify-center">
+      <template x-for="i in 5">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          :class="{'text-yellow-400': i <= Math.round(selectedProduct?.rating?.rate), 'text-gray-400': i > Math.round(selectedProduct?.rating?.rate)}"
+          class="w-4 h-4"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.562 4.796a1 1 0 00.95.691h5.011c.969 0 1.372 1.24.588 1.81l-3.785 3.465a1 1 0 00-.288 1.118l1.25 4.88a1 1 0 01-1.45 1.05l-4.282-2.488a1 1 0 00-1.066 0l-4.282 2.488a1 1 0 01-1.45-1.05l1.25-4.88a1 1 0 00-.288-1.118L.55 8.434a1 1 0 01.588-1.81h5.011a1 1 0 00.95-.691L9.049 2.927z"
+          />
+        </svg>
+      </template>
+      <span x-text="`(${selectedProduct?.rating?.count} reviews)`"></span>
     </div>
-
+    <button
+      @click="toggleFavorite(selectedProduct?.id)"
+      class="bg-blue-600 text-white px-4 py-2 rounded mt-4 w-full"
+    >
+      Add To Cart
+    </button>
+  </div>
+</div>
     <script>
     function sortComponent({products}) {
       return {
