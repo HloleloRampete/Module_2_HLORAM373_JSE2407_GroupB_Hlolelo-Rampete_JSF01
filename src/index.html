@@ -118,6 +118,20 @@
             <option :value="category" x-text="category"></option>
           </template>
         </select>
+        <div class="flex items-center">
+          <input
+            type="text"
+            x-model="searchQuery"
+            placeholder="Search products..."
+            class="border p-2 rounded-l"
+          />
+          <button
+            @click="searchProducts()"
+            class="bg-white text-black border border-l-0 p-2 rounded-r"
+          >
+            Search
+          </button>
+        </div>
     
 
         <!-- FILTER COMPONENT -->
