@@ -327,29 +327,23 @@
             this.loading = false;
           },
 
-      function filterComponent() {
-        return {
-          filterItem: 'All categories',
-          searchTerm: '',
-          categories: ['Electronics', 'Jewelery', "Men's clothing", "Women's clothing"],
-          toggleDropdown() {
-            document.getElementById('dropdown').classList.toggle('hidden');
+      searchProducts() {
+            this.filteredProductsList = this.products
+              .filter((product) => {
+                return (
+                  product.title
+                    .toLowerCase()
+                    .includes(this.searchQuery.toLowerCase()) &&
+                  (!this.selectedCategory ||
+                    product.category === this.selectedCategory)
+                );
+              })
+              .sort((a, b) => {
+                if (this.sortOrder === "asc") return a.price - b.price;
+                if (this.sortOrder === "desc") return b.price - a.price;
+                return 0;
+              });
           },
-          handleFilter(category) {
-            this.filterItem = category;
-            console.log('Filter by:', category);
-            document.getElementById('dropdown').classList.add('hidden');
-            // Implement filter logic here
-          },
-          handleSearch() {
-            console.log('Search for:', this.searchTerm);
-            // Implement search logic here
-          },
-          initializeCategories() {
-            // Fetch categories if necessary
-          }
-        };
-      }
 
       function productList() {
         return {
