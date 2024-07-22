@@ -351,7 +351,32 @@
             this.selectedCategory = "";
             this.searchProducts(); // Reapply default filtering and sorting
           },
+          toggleFavorite(productId) {
+            if (this.favorites.includes(productId)) {
+              this.favorites = this.favorites.filter((id) => id !== productId);
+            } else {
+              this.favorites.push(productId);
+            }
+          },
 
+          isFavorite(productId) {
+            return this.favorites.includes(productId);
+          },
+
+          openModal(product) {
+            this.selectedProduct = product;
+            this.showModal = true;
+          },
+
+          closeModal() {
+            this.showModal = false;
+            this.selectedProduct = null;
+          },
+
+          async init() {
+            await this.fetchProducts();
+            this.searchProducts();
+          },
         };
       }
     </script>
