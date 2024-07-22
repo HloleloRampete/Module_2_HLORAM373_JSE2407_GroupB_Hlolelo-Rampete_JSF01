@@ -345,28 +345,13 @@
               });
           },
 
-      function productList() {
-        return {
-          loading: true,
-          error: null,
-          products: [],
-          initializeProducts() {
-            fetch('https://fakestoreapi.com/products')
-              .then(response => response.json())
-              .then(data => {
-                this.products = data;
-                this.loading = false;
-              })
-              .catch(err => {
-                this.error = err.message;
-                this.loading = false;
-              });
+          resetFilters() {
+            this.searchQuery = "";
+            this.sortOrder = "";
+            this.selectedCategory = "";
+            this.searchProducts(); // Reapply default filtering and sorting
           },
-          addToFavorites(event, productId) {
-            event.stopPropagation();
-            console.log('Add to favorites:', productId);
-            // Implement add to favorites logic here
-          }
+
         };
       }
     </script>
