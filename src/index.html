@@ -206,136 +206,192 @@
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
-                  viewBox="0 0 20 20"
-                  :class="{'text-yellow-400': i <= Math.round(product.rating.rate), 'text-gray-400': i > Math.round(product.rating.rate)}"
-                  class="w-4 h-4"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.562 4.796a1 1 0 00.95.691h5.011c.969 0 1.372 1.24.588 1.81l-3.785 3.465a1 1 0 00-.288 1.118l1.25 4.88a1 1 0 01-1.45 1.05l-4.282-2.488a1 1 0 00-1.066 0l-4.282 2.488a1 1 0 01-1.45-1.05l1.25-4.88a1 1 0 00-.288-1.118L.55 8.434a1 1 0 01.588-1.81h5.011a1 1 0 00.95-.691L9.049 2.927z"
-                  />
-                </svg>
-              </template>
-              <span x-text="`(${product.rating.count} reviews)`"></span>
-            </div>
-            <div @click.stop>
-              <button @click="toggleFavorite(product.id)">
-                <svg
-                  x-show="isFavorite(product.id)"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="red"
-                  class="w-6 h-6"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M12 4.318c1.89-1.768 4.955-1.735 6.797.24 1.885 2.021 1.89 5.27.018 7.296L12 21.842l-6.815-9.99c-1.872-2.026-1.867-5.275.018-7.296 1.842-1.975 4.908-2.008 6.797-.239z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <svg
-                  x-show="!isFavorite(product.id)"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
+                  :class="{
+                    'text-yellow-400': i <= product.rating.rate,
+                    'text-gray-300': i > product.rating.rate
+                  }"
+                  class="h-5 w-5"
                 >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M12 4.318c1.89-1.768 4.955-1.735 6.797.24 1.885 2.021 1.89 5.27.018 7.296L12 21.842l-6.815-9.99c-1.872-2.026-1.867-5.275.018-7.296 1.842-1.975 4.908-2.008 6.797-.239z"
+                    d="M11.48 3.499c.49-1.484 2.55-1.484 3.04 0l1.205 3.652a1.5 1.5 0 001.422 1.034h3.825c1.561 0 2.208 1.998.95 2.902l-3.095 2.06a1.5 1.5 0 00-.517 1.682l1.205 3.653c.49 1.484-1.22 2.71-2.475 1.806l-3.094-2.06a1.5 1.5 0 00-1.766 0l-3.094 2.06c-1.255.904-2.965-.322-2.475-1.806l1.204-3.653a1.5 1.5 0 00-.516-1.682L2.07 11.087c-1.259-.904-.61-2.902.95-2.902h3.825a1.5 1.5 0 001.422-1.034l1.204-3.652z"
                   />
                 </svg>
+              </template>
+              <p class="text-sm ml-1" x-text="product.rating.rate"></p>
+            </div>
+            <div class="flex space-x-4 mt-4">
+              <button
+                @click.stop="toggleFavorite(product.id)"
+                :class="{
+                  'bg-red-500': isFavorite(product.id),
+                  'bg-gray-500': !isFavorite(product.id)
+                }"
+                class="text-white px-2 py-1 rounded"
+              >
+                <span x-show="isFavorite(product.id)">Remove Favorite</span>
+                <span x-show="!isFavorite(product.id)">Add to Favorite</span>
+              </button>
+              <button class="bg-blue-500 text-white px-2 py-1 rounded">
+                Add to Cart
               </button>
             </div>
-            <button
-              @click.stop
-              class="bg-blue-600 text-white px-4 py-2 rounded mt-4"
-            >
-              Add To Cart
-            </button>
           </div>
         </template>
       </div>
     </div>
-    <!-- Modal -->
+
+    <!-- Product Modal -->
     <div
       x-show="showModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 transform scale-90"
+      x-transition:enter-end="opacity-100 transform scale-100"
+      x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="opacity-100 transform scale-100"
+      x-transition:leave-end="opacity-0 transform scale-90"
+      class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
     >
-      <div
-        class="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-md mx-4"
-      >
-        <button
-          @click="closeModal()"
-          class="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-        <h2 class="text-xl font-bold mb-4" x-text="selectedProduct?.title"></h2>
-        <img
-          :src="selectedProduct?.image"
-          alt=""
-          class="h-48 object-cover mb-4 mx-auto"
-        />
-        <p
-          class="text-gray-700 font-bold mb-2"
-          x-text="'$' + selectedProduct?.price"
-        ></p>
-        <p class="text-gray-500 mb-2" x-text="selectedProduct?.category"></p>
-        <p class="text-gray-700 mb-4" x-text="selectedProduct?.description"></p>
-        <div class="text-gray-700 mt-2 flex items-center justify-center">
-          <template x-for="i in 5">
+      <div class="bg-white p-6 rounded-lg max-w-3xl w-full">
+        <div class="flex justify-end">
+          <button @click="closeModal()">
             <svg
+              class="w-6 h-6 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              :class="{'text-yellow-400': i <= Math.round(selectedProduct?.rating?.rate), 'text-gray-400': i > Math.round(selectedProduct?.rating?.rate)}"
-              class="w-4 h-4"
             >
               <path
-                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.562 4.796a1 1 0 00.95.691h5.011c.969 0 1.372 1.24.588 1.81l-3.785 3.465a1 1 0 00-.288 1.118l1.25 4.88a1 1 0 01-1.45 1.05l-4.282-2.488a1 1 0 00-1.066 0l-4.282 2.488a1 1 0 01-1.45-1.05l1.25-4.88a1 1 0 00-.288-1.118L.55 8.434a1 1 0 01.588-1.81h5.011a1 1 0 00.95-.691L9.049 2.927z"
-              />
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
             </svg>
-          </template>
-          <span x-text="`(${selectedProduct?.rating?.count} reviews)`"></span>
+          </button>
         </div>
-        <button
-          @click="toggleFavorite(selectedProduct?.id)"
-          class="bg-blue-600 text-white px-4 py-2 rounded mt-4 w-full"
-        >
-          Add To Cart
-        </button>
+        <div class="flex flex-col md:flex-row">
+          <img
+            :src="selectedProduct.image"
+            alt=""
+            class="h-48 object-cover md:h-auto md:w-1/2"
+          />
+          <div class="md:ml-6">
+            <h2 class="text-xl font-semibold mt-4 md:mt-0">
+              <span x-text="selectedProduct.title"></span>
+            </h2>
+            <p class="text-gray-700 mt-2" x-text="'$' + selectedProduct.price"></p>
+            <p class="text-gray-700 mt-2" x-text="selectedProduct.category"></p>
+            <p class="text-gray-700 mt-2" x-text="selectedProduct.description"></p>
+            <div class="text-gray-700 mt-2 flex items-center">
+              <template x-for="i in 5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  :class="{
+                    'text-yellow-400': i <= selectedProduct.rating.rate,
+                    'text-gray-300': i > selectedProduct.rating.rate
+                  }"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M11.48 3.499c.49-1.484 2.55-1.484 3.04 0l1.205 3.652a1.5 1.5 0 001.422 1.034h3.825c1.561 0 2.208 1.998.95 2.902l-3.095 2.06a1.5 1.5 0 00-.517 1.682l1.205 3.653c.49 1.484-1.22 2.71-2.475 1.806l-3.094-2.06a1.5 1.5 0 00-1.766 0l-3.094 2.06c-1.255.904-2.965-.322-2.475-1.806l1.204-3.653a1.5 1.5 0 00-.516-1.682L2.07 11.087c-1.259-.904-.61-2.902.95-2.902h3.825a1.5 1.5 0 001.422-1.034l1.204-3.652z"
+                  />
+                </svg>
+              </template>
+              <p class="text-sm ml-1" x-text="selectedProduct.rating.rate"></p>
+            </div>
+            <button
+              class="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+              @click="closeModal()"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Alpine.js Store Script -->
     <script>
+      /**
+       * The main store function for the e-commerce application.
+       * @returns {Object} The store object with properties and methods.
+       */
       function store() {
         return {
+          /**
+           * The search query for filtering products.
+           * @type {string}
+           */
           searchQuery: "",
+
+          /**
+           * The sort order for products (asc, desc).
+           * @type {string}
+           */
           sortOrder: "",
+
+          /**
+           * The selected category for filtering products.
+           * @type {string}
+           */
           selectedCategory: "",
+
+          /**
+           * Indicates if products are being loaded.
+           * @type {boolean}
+           */
           loading: false,
+
+          /**
+           * The list of all products.
+           * @type {Array}
+           */
           products: [],
+
+          /**
+           * The filtered list of products to display.
+           * @type {Array}
+           */
           filteredProductsList: [],
+
+          /**
+           * The list of favorite product IDs.
+           * @type {Array<number>}
+           */
           favorites: [],
+
+          /**
+           * Indicates if the modal is open.
+           * @type {boolean}
+           */
           showModal: false,
+
+          /**
+           * The currently selected product for the modal.
+           * @type {Object|null}
+           */
           selectedProduct: null,
+
+          /**
+           * The list of product categories.
+           * @type {Array<string>}
+           */
           categories: [],
 
+          /**
+           * Fetches products from the API and initializes categories.
+           * @returns {Promise<void>}
+           */
           async fetchProducts() {
             this.loading = true;
             const response = await fetch("https://fakestoreapi.com/products");
@@ -348,6 +404,9 @@
             this.loading = false;
           },
 
+          /**
+           * Filters and sorts the product list based on search query, category, and sort order.
+           */
           searchProducts() {
             this.filteredProductsList = this.products
               .filter((product) => {
@@ -366,37 +425,59 @@
               });
           },
 
+          /**
+           * Resets all filters and displays all products.
+           */
           resetFilters() {
             this.searchQuery = "";
-            this.sortOrder = "";
             this.selectedCategory = "";
-            this.searchProducts(); // Reapply default filtering and sorting
+            this.sortOrder = "";
+            this.filteredProductsList = this.products;
           },
+
+          /**
+           * Initializes the store by fetching products.
+           */
+          init() {
+            this.fetchProducts();
+          },
+
+          /**
+           * Checks if a product is in the favorites list.
+           * @param {number} productId - The ID of the product to check.
+           * @returns {boolean} True if the product is a favorite, false otherwise.
+           */
+          isFavorite(productId) {
+            return this.favorites.includes(productId);
+          },
+
+          /**
+           * Toggles the favorite status of a product.
+           * @param {number} productId - The ID of the product to toggle.
+           */
           toggleFavorite(productId) {
-            if (this.favorites.includes(productId)) {
+            if (this.isFavorite(productId)) {
               this.favorites = this.favorites.filter((id) => id !== productId);
             } else {
               this.favorites.push(productId);
             }
           },
 
-          isFavorite(productId) {
-            return this.favorites.includes(productId);
-          },
-
+          /**
+           * Opens the modal with the selected product.
+           * @param {Object} product - The product to display in the modal.
+           */
           openModal(product) {
             this.selectedProduct = product;
             this.showModal = true;
           },
 
+          /**
+           * Closes the product modal.
+           */
           closeModal() {
             this.showModal = false;
             this.selectedProduct = null;
-          },
-
-          async init() {
-            await this.fetchProducts();
-            this.searchProducts();
           },
         };
       }
