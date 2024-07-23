@@ -114,7 +114,8 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container mx-auto p-6">
+    <div class="flex flex-col items-center p-6">
+      <!-- Filter and Sort Component -->
       <div
         class="flex flex-col items-center mb-4 space-y-4 sm:flex-row sm:space-y-0 sm:justify-between"
       >
@@ -166,6 +167,7 @@
         </div>
       </div>
 
+      <!-- Loading State -->
       <div class="loading text-center text-2xl" x-show="loading">
         Loading...
       </div>
